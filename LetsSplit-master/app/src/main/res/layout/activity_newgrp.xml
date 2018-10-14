@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/theme"
+
+    tools:context=".newgrp">
+
+    <EditText
+        android:id="@+id/grpnm_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="  Enter a group name"
+        android:inputType="textPersonName" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/back_id"
+            android:layout_width="37dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#F15F79"
+            android:drawableLeft="@drawable/ic_arrow_back_black_24dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="47dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Create a group"
+            android:textColor="@android:color/white"
+            android:textSize="22dp" />
+
+        <Button
+            android:id="@+id/save_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="13dp"
+            android:background="#F15F79"
+            android:text="SAVE"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="338dp"
+        android:layout_height="346dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp" />
+
+    <Button
+        android:id="@+id/addP_id"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="144dp"
+        android:background="@drawable/round"
+        android:onClick="callContact"
+        android:text="Add Person" />
+
+    <ImageView
+        android:id="@+id/grpimg"
+        android:layout_width="57dp"
+        android:layout_height="48dp"
+        android:layout_alignTop="@+id/grpnm_id"
+        android:layout_marginEnd="-8dp"
+        android:layout_toStartOf="@+id/grpnm_id"
+        android:src="@drawable/ic_group_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="41dp"
+        android:layout_height="51dp"
+        android:layout_alignStart="@+id/grpnm_id"
+        android:layout_alignTop="@+id/addP_id"
+        android:src="@drawable/ic_person_add_black_24dp" />
+
+    <TextView
+        android:id="@+id/grp1_id"
+        android:layout_width="400dp"
+        android:layout_height="53dp"
+        android:layout_alignBottom="@+id/grpnm_id"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/autour_one"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

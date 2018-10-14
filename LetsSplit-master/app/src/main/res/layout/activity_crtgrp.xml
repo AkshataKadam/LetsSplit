@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/theme"
+    tools:context=".crtgrp">
+
+    <Button
+        android:id="@+id/crtGrp_id"
+        android:layout_width="189dp"
+        android:layout_height="59dp"
+
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp"
+        android:background="@drawable/round"
+        android:fontFamily="serif"
+        android:text="+ CREATE GROUP"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/lv_id"
+        android:layout_width="387dp"
+        android:layout_height="366dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="231dp"
+        android:layout_height="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="166dp"
+        android:layout_toEndOf="@+id/imageView5"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="AVAILABLE GROUP"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/bck"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:background="#F15F79"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="346dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-229dp"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/textView"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text="B I L L  S P L I T"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="76dp"
+        android:layout_height="61dp"
+        android:layout_alignStart="@+id/_dynamic"
+        android:layout_alignTop="@+id/crtGrp_id"
+        app:srcCompat="@drawable/icon" />
+</RelativeLayout>
