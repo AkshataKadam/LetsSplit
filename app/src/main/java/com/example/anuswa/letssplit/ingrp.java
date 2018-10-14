@@ -118,7 +118,7 @@ String name1;
         //this.con = Contact;
         myref = FirebaseDatabase.getInstance().getReference("users").child(uid).child("Group");
 
-        myref.child(grpnm).child(name).child();
+        myref.child(grpnm).child(name);
 
 
     }
