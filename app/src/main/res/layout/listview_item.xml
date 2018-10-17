@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/idpersonname"
+        android:layout_width="206dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/idpersondebt"
+        android:layout_width="129dp"
+        android:layout_height="54dp"
+        android:layout_alignTop="@+id/idpersonname"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/idpersonname"
+        android:text="TextView"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="68dp"
+        android:layout_height="54dp"
+        android:layout_alignTop="@+id/idpersonname"
+        android:layout_toEndOf="@+id/idpersondebt"
+        app:srcCompat="@drawable/ic_edit" />
+</RelativeLayout>

@@ -44,8 +44,8 @@ public class newgrp extends AppCompatActivity {
     String ConName, grpName, uid, con;
     private TextView grp;
 
-    ArrayAdapter<List> arrayAdapter;
-    ArrayList<List> listg = new ArrayList<>();
+    ArrayAdapter<String> arrayAdapter;
+    ArrayList<String> listg = new ArrayList<>();
     private ListView listgrp;
     FirebaseAuth mAuth;
     DatabaseReference grpref;
@@ -69,7 +69,7 @@ public class newgrp extends AppCompatActivity {
         grpref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        arrayAdapter = new ArrayAdapter<List>(newgrp.this, android.R.layout.simple_list_item_1, listg);
+        arrayAdapter = new ArrayAdapter<String>(newgrp.this, android.R.layout.simple_list_item_1, listg);
         listgrp.setAdapter(arrayAdapter);
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +100,7 @@ public class newgrp extends AppCompatActivity {
                 grpName = grpname.getText().toString();
                 myref = FirebaseDatabase.getInstance().getReference("users").child(uid);
                 myref.child("Group").child(grpName).setValue(grpName);
-                /*int length = Toast.LENGTH_SHORT;
-                String msg = "Group created";
-                Toast toast = Toast.makeText(newgrp.this,msg,length);
-                toast.show();*/
+
                 grp.setText(grpName);
                 if (!grpName.isEmpty()) {
                     grpname.setVisibility(View.INVISIBLE);
@@ -165,15 +162,15 @@ public class newgrp extends AppCompatActivity {
     }
 
     private void Retrive() {
-        grpref.child("users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpName).child(namep).addValueEventListener(new ValueEventListener() {
+        grpref.child("users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<List> set = new ArrayList<>();
+                Set<String> set=new HashSet<>();
                 Iterator iterator = dataSnapshot.getChildren().iterator();
 
                 while (iterator.hasNext()) {
                    // List list =dataSnapshot.getValue();
-                    set.add(dataSnapshot.getValue(List.class));
+                    set.add(((DataSnapshot)iterator.next()).getKey());
                 }
 
                 listg.clear();

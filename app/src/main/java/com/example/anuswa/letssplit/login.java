@@ -32,17 +32,22 @@ public class login extends AppCompatActivity {
     //private ProgressBar progressBar2;
    // private DatabaseReference ref;
    // private FirebaseUser firebaseUser;
+    String passwordstring;
+    String emailstring;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+         emailstring = "abc@gmail.com";
+         passwordstring = "prasad212";
         emailloginno = findViewById(R.id.emaillogin_id);
         passlogin = findViewById(R.id.passwordlogin_id);
         login = findViewById(R.id.login_id);
         newAcc = findViewById(R.id.newAcc_id);
         mAuth = FirebaseAuth.getInstance();
        // firebaseUser=mAuth.getCurrentUser();
+
+
         newAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,8 +81,7 @@ public class login extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(view.getContext());
         progressDialog.setMessage("Please wait..!!");
         progressDialog.show();
-
-        mAuth.signInWithEmailAndPassword(emaillog,passwordlog).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(emaillog, passwordlog).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 

@@ -37,14 +37,16 @@ public class ingrp extends AppCompatActivity {
     String grpnm;
     FirebaseAuth mAuth;
     DatabaseReference grpref;
-    ArrayAdapter<List> arrayAdapter;
-    ArrayList<List> listg = new ArrayList<>();
+    ArrayAdapter<String> arrayAdapter;
+    ArrayList<String> listg = new ArrayList<>();
     private ListView listgrp;
 String name1;
     String ConName,uid;
     private final int Pick_contact = 1;
     private Button addmem;
     private DatabaseReference myref;
+
+    Button equal;
 
 
     @Override
@@ -53,6 +55,7 @@ String name1;
         setContentView(activity_ingrp);
         grptxt = findViewById(R.id.grptxt_id);
         listgrp = findViewById(R.id.ingrplist_id);
+        equal = findViewById(R.id.equ_id);
 
         addmem = findViewById(R.id.addmem_id);
 
@@ -60,7 +63,7 @@ String name1;
         grpref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        arrayAdapter = new ArrayAdapter<List>(ingrp.this, android.R.layout.simple_list_item_1, listg);
+        arrayAdapter = new ArrayAdapter<String>(ingrp.this, android.R.layout.simple_list_item_1, listg);
         listgrp.setAdapter(arrayAdapter);
 
 
@@ -77,6 +80,14 @@ String name1;
             public void onClick(View v) {
                 callContact(v);
 
+            }
+        });
+
+        equal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(ingrp.this, Distribute.class);
+                startActivity(in);
             }
         });
     }
@@ -124,14 +135,14 @@ String name1;
     }
 
     private void Retrive() {
-        grpref.child("users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpnm).child(name1).addValueEventListener(new ValueEventListener() {
+        grpref.child("users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpnm).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<List> set = new ArrayList<>();
+                Set<String> set=new HashSet<>();
                 Iterator iterator = dataSnapshot.getChildren().iterator();
 
                 while (iterator.hasNext()) {
-                    set.add((List) ((DataSnapshot) iterator.next()).getValue());
+                    set.add(((DataSnapshot)iterator.next()).getKey());
                 }
 
                 listg.clear();
@@ -149,5 +160,8 @@ String name1;
 
 
     }
+
+
+
 }
 
