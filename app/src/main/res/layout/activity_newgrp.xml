@@ -44,7 +44,6 @@
             android:layout_height="47dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Create a group"
             android:textColor="@android:color/white"
             android:textSize="22dp" />
 

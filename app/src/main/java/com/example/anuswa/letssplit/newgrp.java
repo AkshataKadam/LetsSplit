@@ -58,7 +58,7 @@ public class newgrp extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         grpname = (EditText) findViewById(R.id.grpnm_id);
         addPer = (Button) findViewById(R.id.addP_id);
-        save = (Button) findViewById(R.id.save_id);
+       save = (Button) findViewById(R.id.save_id);
         grpimg = findViewById(R.id.grpimg);
         grp = findViewById(R.id.grp1_id);
         back = findViewById(R.id.back_id);
