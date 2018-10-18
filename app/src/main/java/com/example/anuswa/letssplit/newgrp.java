@@ -49,12 +49,7 @@ public class newgrp extends AppCompatActivity {
     String ConName, grpName, uid, con;
     private TextView grp;
 
-    String  grpname,sresult,key;
-    String[] personname = new String[10];
-    String[] persondebt = new String[10];
-    int count=1,x=0;
 
-    String mtotbill,mcat,contactnm;
 
     ArrayAdapter<String> arrayAdapter;
     ArrayList<String> listg = new ArrayList<>();
@@ -91,7 +86,8 @@ public class newgrp extends AppCompatActivity {
                 startActivity(in);
             }
         });
-       /* next.setOnClickListener(new View.OnClickListener() {
+
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             //public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             public void onClick(View v) {
@@ -102,85 +98,9 @@ public class newgrp extends AppCompatActivity {
 
             }
 
-        });*/
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(newgrp.this);
-                View mview = getLayoutInflater().inflate(R.layout.category_dialog, null);
-                final EditText totalbill = mview.findViewById(R.id.idtotbill);
-                final EditText category = mview.findViewById(R.id.idcat);
-                mtotbill =totalbill.getText().toString();
-                mcat=category.getText().toString();
-
-
-                builder.setPositiveButton("Unequally", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        mtotbill =totalbill.getText().toString();
-                        mcat=category.getText().toString();
-
-                        //Toast.makeText(MainActivity.this, "added successfully", Toast.LENGTH_SHORT).show();
-                        if (!mtotbill.isEmpty() && !mcat.isEmpty())
-                        {
-                            startActivity(new Intent(newgrp.this, Distribute.class).putExtra("gn", grpname).putExtra("Result", sresult).putExtra("contactname", contactnm));
-                        }
-                        else
-                        {
-                            Toast.makeText(newgrp.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-
-                builder.setNegativeButton("Equally", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mtotbill =totalbill.getText().toString();
-                        mcat=category.getText().toString();
-
-
-                        if (!mtotbill.isEmpty() && !mcat.isEmpty())
-                        {
-                            x=x+1;
-                            Double result;
-                            try {
-                                double num = Double.parseDouble(mtotbill);
-                                result = num /count;
-                                sresult = String.valueOf(result);
-                                DisplayMembers();
-
-                                startActivity(new Intent(newgrp.this, ingrp.class));
-
-
-                            } catch (NumberFormatException e) {
-                            }
-                        }
-
-                        else
-                        {
-                            Toast.makeText(newgrp.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-
-
-
-                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-                builder.setView(mview);
-                AlertDialog dialog=builder.create();
-                dialog.show();
-            }
         });
+
+
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -232,7 +152,7 @@ public class newgrp extends AppCompatActivity {
                     //String Conc=c.getString(c.getColumnIndexOrThrow(ContactsContract))
                     Toast.makeText(this, "You have picked " + name, Toast.LENGTH_LONG).show();
                     setCon(name);
-                   //// Retrive();
+                    Retrive();
                 }
             }
         }
@@ -279,70 +199,12 @@ public class newgrp extends AppCompatActivity {
         });
     }
 
-        private void DisplayMembers()
-        {
 
-            myref=FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpname).child("Members");
-            myref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                    AmountInfo amountInfo=new AmountInfo(contactnm,sresult);
-
-                    int i=0;
-                    for(DataSnapshot ds: dataSnapshot.getChildren())
-                    {
-
-                        amountInfo.setPersonname(ds.getValue(AmountInfo.class).getPersonname());
-                        amountInfo.setPricee(ds.getValue(AmountInfo.class).getPricee());
-                        i=i+1;
-
-                        personname[i]=amountInfo.getPersonname();
-                        persondebt[i]=amountInfo.getPricee();
-
-                        if(x>0) {
-
-                            Query ref = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpname).child("Members").orderByChild("personname").equalTo(contactnm);
-                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-
-                                    for (DataSnapshot childsnap : dataSnapshot.getChildren()) {
-                                        key = childsnap.getKey();
-                                        update(key, sresult);
-                                    }
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-
-        private void update (String key , String sresult)
-        {
-            myref=FirebaseDatabase.getInstance().getReference();
-            myref=myref.child("Users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpname).child("Members");
-            myref.child(key).child("pricee").setValue(sresult);
-
-        }
 
 
 
 }
+
 
 
 

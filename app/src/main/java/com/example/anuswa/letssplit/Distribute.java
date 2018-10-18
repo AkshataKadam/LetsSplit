@@ -177,7 +177,7 @@ public class Distribute extends AppCompatActivity {
     {
         groupref=FirebaseDatabase.getInstance().getReference();
         groupref=groupref.child("Users").child(mAuth.getCurrentUser().getUid()).child("Group").child(gname).child("Members");
-        groupref.child(key).child("pricee").setValue(sresult);
+        groupref.child(key).child("cost").setValue(sresult);
 
     }
 

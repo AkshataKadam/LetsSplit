@@ -1,6 +1,8 @@
 package com.example.anuswa.letssplit;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -46,7 +49,13 @@ String name1;
     private Button addmem;
     private DatabaseReference myref;
 
-    Button equal;
+    String  grpname,sresult,key;
+    String[] personname = new String[10];
+    String[] persondebt = new String[10];
+    int count=1,x=0;
+    String mtotbill,mcat,contactnm;
+
+    Button equal,next;
 
 
     @Override
@@ -56,8 +65,10 @@ String name1;
         grptxt = findViewById(R.id.grptxt_id);
         listgrp = findViewById(R.id.ingrplist_id);
         equal = findViewById(R.id.equ_id);
+        next = findViewById(R.id.next_id);
 
         addmem = findViewById(R.id.addmem_id);
+
 
 
         grpref = FirebaseDatabase.getInstance().getReference();
@@ -90,6 +101,85 @@ String name1;
                 startActivity(in);
             }
         });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ingrp.this);
+                View mview = getLayoutInflater().inflate(R.layout.category_dialog, null);
+                final EditText totalbill = mview.findViewById(R.id.idtotbill);
+                final EditText category = mview.findViewById(R.id.idcat);
+                mtotbill =totalbill.getText().toString();
+                mcat=category.getText().toString();
+
+
+                builder.setPositiveButton("Unequally", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        mtotbill =totalbill.getText().toString();
+                        mcat=category.getText().toString();
+
+                        //Toast.makeText(MainActivity.this, "added successfully", Toast.LENGTH_SHORT).show();
+                        if (!mtotbill.isEmpty() && !mcat.isEmpty())
+                        {
+                            startActivity(new Intent(ingrp.this, Distribute.class).putExtra("gn", grpname).putExtra("Result", sresult).putExtra("contactname", contactnm));
+                        }
+                        else
+                        {
+                            Toast.makeText(ingrp.this, "please fill all fields", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+                builder.setNegativeButton("Equally", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mtotbill =totalbill.getText().toString();
+                        mcat=category.getText().toString();
+
+
+                        if (!mtotbill.isEmpty() && !mcat.isEmpty())
+                        {
+                            x=x+1;
+                            Double result;
+                            try {
+                                double num = Double.parseDouble(mtotbill);
+                                result = num /count;
+                                sresult = String.valueOf(result);
+                                DisplayMembers();
+
+                                startActivity(new Intent(ingrp.this, ingrp.class));
+
+
+                            } catch (NumberFormatException e) {
+                            }
+                        }
+
+                        else
+                        {
+                            Toast.makeText(ingrp.this, "please fill all fields", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
+
+
+                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                builder.setView(mview);
+                AlertDialog dialog=builder.create();
+                dialog.show();
+            }
+        });
+
     }
 
 
@@ -156,7 +246,68 @@ String name1;
             }
         });
 
+        }
 
+    private void DisplayMembers()
+    {
+
+        myref=FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpname).child("Members");
+        myref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                AmountInfo amountInfo=new AmountInfo(contactnm,sresult);
+
+                int i=0;
+                for(DataSnapshot ds: dataSnapshot.getChildren())
+                {
+
+                    amountInfo.setPersonname(ds.getValue(AmountInfo.class).getPersonname());
+                    amountInfo.setPricee(ds.getValue(AmountInfo.class).getPricee());
+                    i=i+1;
+
+                    personname[i]=amountInfo.getPersonname();
+                    persondebt[i]=amountInfo.getPricee();
+
+                    if(x>0) {
+
+                        Query ref = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpname).child("Members").orderByChild("personname").equalTo(contactnm);
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+
+                                for (DataSnapshot childsnap : dataSnapshot.getChildren()) {
+                                    key = childsnap.getKey();
+                                    update(key, sresult);
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void update (String key , String sresult)
+    {
+        myref=FirebaseDatabase.getInstance().getReference();
+        myref=myref.child("Users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpname).child("Members");
+        myref.child(key).child("pricee").setValue(sresult);
+
+        // grpref.child("users").child(mAuth.getCurrentUser().getUid()).child("Group").child(grpName).addValueEventListener(new ValueEventListener() {
 
 
     }
